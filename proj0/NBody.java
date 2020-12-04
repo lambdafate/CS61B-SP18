@@ -5,7 +5,7 @@
  */
 
 public class NBody {
-    public static final String background = "images/starfield.jpg";
+    private static final String background = "images/starfield.jpg";
 
     public static double readRadius(String filepath) {
         In in = new In(filepath);
