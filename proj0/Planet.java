@@ -128,10 +128,4 @@ public class Planet {
     public void draw() {
         StdDraw.picture(xxPos, yyPos, "images/" + imgFileName);
     }
-
-    public static void main(String[] args) {
-        Planet p = new Planet(3, 4, 3, 4, 3, "");
-        double f = p.calcForceExertedBy(p);
-        System.out.println(f);
-    }
 }
