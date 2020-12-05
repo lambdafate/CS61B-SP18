@@ -30,16 +30,12 @@ public class LinkedListDeque<T> {
 
     /* Adds an item of type T to the front of the deque. */
     public void addFirst(T item) {
-        size += 1;
-
         Node<T> node = new Node<>(item, null, null);
         addAfter(sentinel, node);
     }
 
     /* Adds an item of type T to the back of the deque. */
     public void addLast(T item) {
-        size += 1;
-
         Node<T> node = new Node<>(item, null, null);
         addAfter(sentinel.next, node);
     }
@@ -71,7 +67,6 @@ public class LinkedListDeque<T> {
     /* Removes and returns the item at the front of the deque. If no such item exists, returns null. */
     public T removeFirst() {
         if (!isEmpty()) {
-            size -= 1;
             T ret = sentinel.next.value;
             removeAfter(sentinel);
             return ret;
@@ -82,7 +77,6 @@ public class LinkedListDeque<T> {
     /* Removes and returns the item at the back of the deque. If no such item exists, returns null. */
     public T removeLast() {
         if (!isEmpty()) {
-            size -= 1;
             T ret = sentinel.prev.value;
             removeAfter(sentinel.prev.prev);
             return ret;
@@ -124,12 +118,13 @@ public class LinkedListDeque<T> {
         node2.prev = node;
         node.prev = node1;
         node1.next = node;
+        size += 1;
     }
 
     private void removeAfter(Node<T> node1) {
         Node<T> node2 = node1.next.next;
         node1.next = node2;
         node2.prev = node1;
+        size -= 1;
     }
-
 }
