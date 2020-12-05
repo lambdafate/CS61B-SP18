@@ -37,7 +37,7 @@ public class LinkedListDeque<T> {
     /* Adds an item of type T to the back of the deque. */
     public void addLast(T item) {
         Node<T> node = new Node<>(item, null, null);
-        addAfter(sentinel.next, node);
+        addAfter(sentinel.prev, node);
     }
 
     /* Returns true if deque is empty, false otherwise. */
