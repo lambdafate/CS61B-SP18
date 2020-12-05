@@ -21,10 +21,10 @@ public class LinkedListDeque<T> {
         sentinel.next = sentinel;
     }
 
-    public LinkedListDeque(LinkedListDeque<T> other) {
+    public LinkedListDeque(LinkedListDeque other) {
         this();
         for (int i = 0; i < other.size(); i++) {
-            this.addLast(other.get(i));
+            this.addLast((T) other.get(i));
         }
     }
 
