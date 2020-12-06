@@ -26,9 +26,7 @@ public class ArrayDeque<T> {
 
     /* Adds an item of type T to the front of the deque. */
     public void addFirst(T item) {
-        if (size == items.length) {
-            resize(size * INCREASE);
-        }
+        checkWhenAdd();
         items[first] = item;
         forwardFirst();
         size += 1;
@@ -36,9 +34,7 @@ public class ArrayDeque<T> {
 
     /* Adds an item of type T to the back of the deque. */
     public void addLast(T item) {
-        if (size == items.length) {
-            resize(size * INCREASE);
-        }
+        checkWhenAdd();
         items[last] = item;
         backLast();
         size += 1;
@@ -76,9 +72,6 @@ public class ArrayDeque<T> {
         items[first] = null;
         size -= 1;
 
-        if (items.length > 16 && getRate() < 0.25) {
-            resize(size * 2);
-        }
         return ret;
     }
 
@@ -92,9 +85,6 @@ public class ArrayDeque<T> {
         items[last] = null;
         size -= 1;
 
-        if (items.length > 16 && getRate() < 0.25) {
-            resize(size * 2);
-        }
         return ret;
     }
 
@@ -146,4 +136,15 @@ public class ArrayDeque<T> {
         return 1.0 * size / items.length;
     }
 
+    private void checkWhenAdd() {
+        if (size == items.length) {
+            resize(size * INCREASE);
+        }
+    }
+
+    private void checkWhenRemove() {
+        if (items.length > 16 && getRate() < 0.25) {
+            resize(size * 2);
+        }
+    }
 }
