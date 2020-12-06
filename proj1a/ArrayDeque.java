@@ -1,26 +1,32 @@
 public class ArrayDeque<T> {
     private static final int INIT_SIZE = 8;
-    private static final int INCREASE  = 2;
+    private static final int INCREASE = 2;
 
     private Object[] items;
     private int first;
     private int last;
     private int size;
 
-    public ArrayDeque(){
+    public ArrayDeque() {
         items = new Object[INIT_SIZE];
         first = 0;
-        last  = 1;
-        size  = 0;
+        last = 1;
+        size = 0;
     }
 
-    public ArrayDeque(ArrayDeque other){
-        this();
+    public ArrayDeque(ArrayDeque other) {
+        items = new Object[other.items.length];
+        for (int i = 0; i < other.size(); i++) {
+            items[i] = other.get(i);
+        }
+        size = other.size();
+        first = items.length - 1;
+        last = size;
     }
 
     /* Adds an item of type T to the front of the deque. */
     public void addFirst(T item) {
-        if(size == items.length){
+        if (size == items.length) {
             resize(size * INCREASE);
         }
         items[first] = item;
@@ -30,7 +36,7 @@ public class ArrayDeque<T> {
 
     /* Adds an item of type T to the back of the deque. */
     public void addLast(T item) {
-        if(size == items.length){
+        if (size == items.length) {
             resize(size * INCREASE);
         }
         items[last] = item;
@@ -51,27 +57,26 @@ public class ArrayDeque<T> {
     /* Prints the items in the deque from first to last, separated by a space.
     Once all the items have been printed, print out a new line. */
     public void printDeque() {
-        int index = (first + 1) % items.length;
-        int tmpIndex = index;
         for (int i = 0; i < size; i++) {
-            if(index != tmpIndex){
+            if (i != 0) {
                 System.out.print(" ");
             }
-            System.out.print(items[index]);
-            index = (index + 1) % items.length;
+            System.out.print(this.get(i));
         }
         System.out.print("\n");
     }
 
     /* Removes and returns the item at the front of the deque. If no such item exists, returns null. */
     public T removeFirst() {
-        if(isEmpty()){ return null; }
+        if (isEmpty()) {
+            return null;
+        }
         backFirst();
-        T ret = (T)items[first];
+        T ret = (T) items[first];
         items[first] = null;
         size -= 1;
 
-        if(items.length > 16 && getRate() < 0.25){
+        if (items.length > 16 && getRate() < 0.25) {
             resize(size * 2);
         }
         return ret;
@@ -79,13 +84,15 @@ public class ArrayDeque<T> {
 
     /* Removes and returns the item at the back of the deque. If no such item exists, returns null. */
     public T removeLast() {
-        if(isEmpty()){ return null; }
+        if (isEmpty()) {
+            return null;
+        }
         forwardLast();
-        T ret = (T)items[last];
+        T ret = (T) items[last];
         items[last] = null;
         size -= 1;
 
-        if(items.length > 16 && getRate() < 0.25){
+        if (items.length > 16 && getRate() < 0.25) {
             resize(size * 2);
         }
         return ret;
@@ -94,49 +101,48 @@ public class ArrayDeque<T> {
     /* Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth.
     If no such item exists, returns null. Must not alter the deque! */
     public T get(int index) {
-        if(index < 0 || index >= size) {
+        if (index < 0 || index >= size) {
             return null;
         }
-        return (T)items[(first + 1 + index) % items.length];
+        return (T) items[(first + 1 + index) % items.length];
     }
 
 
-    private void resize(int newSize){
+    private void resize(int newSize) {
         Object[] tmp = new Object[newSize];
-        int index = (first + 1) % items.length;
         for (int i = 0; i < size; i++) {
-            tmp[i] = items[index];
-            index = (index + 1) % items.length;
+            tmp[i] = this.get(i);
         }
 
         // update first and last
         items = tmp;
         first = items.length - 1;
-        last  = size;
+        last = size;
     }
-    
-    private void backFirst(){
+
+    private void backFirst() {
         first = (first + 1) % items.length;
     }
-    
-    private void forwardFirst(){
+
+    private void forwardFirst() {
         first -= 1;
-        if(first < 0){
+        if (first < 0) {
             first = items.length - 1;
         }
     }
-    
-    private void backLast(){
+
+    private void backLast() {
         last = (last + 1) % items.length;
     }
-    
-    private void forwardLast(){
+
+    private void forwardLast() {
         last -= 1;
-        if(last < 0){
+        if (last < 0) {
             last = items.length - 1;
         }
     }
-    private double getRate(){
+
+    private double getRate() {
         return 1.0 * size / items.length;
     }
 

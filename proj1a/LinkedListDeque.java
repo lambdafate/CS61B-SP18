@@ -1,10 +1,10 @@
 public class LinkedListDeque<T> {
     private static class Node<T> {
-        public T value;
-        public Node<T> prev;
-        public Node<T> next;
+        private T value;
+        private Node<T> prev;
+        private Node<T> next;
 
-        public Node(T value, Node<T> prev, Node<T> next) {
+        private Node(T value, Node<T> prev, Node<T> next) {
             this.value = value;
             this.prev = prev;
             this.next = next;
@@ -53,13 +53,11 @@ public class LinkedListDeque<T> {
     /* Prints the items in the deque from first to last, separated by a space.
     Once all the items have been printed, print out a new line. */
     public void printDeque() {
-        Node<T> work = sentinel.next;
-        while (work != sentinel) {
-            if (work != sentinel.next) {
+        for (int i = 0; i < size; i++) {
+            if (i != 0) {
                 System.out.print(" ");
             }
-            System.out.print(work.value);
-            work = work.next;
+            System.out.print(this.get(i));
         }
         System.out.print("\n");
     }
