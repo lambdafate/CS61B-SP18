@@ -72,6 +72,7 @@ public class ArrayDeque<T> {
         items[first] = null;
         size -= 1;
 
+        checkWhenRemove();
         return ret;
     }
 
@@ -85,6 +86,7 @@ public class ArrayDeque<T> {
         items[last] = null;
         size -= 1;
 
+        checkWhenRemove();
         return ret;
     }
 
