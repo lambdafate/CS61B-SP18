@@ -103,8 +103,12 @@ public class ArrayDeque<T> {
 
     private void resize(int newSize){
         Object[] tmp = new Object[newSize];
-        System.arraycopy(items, first + 1, tmp, 0, items.length - first - 1);
-        System.arraycopy(items, 0, tmp, items.length - first - 1, first + 1);
+        int index = (first + 1) % items.length;
+        for (int i = 0; i < size; i++) {
+            tmp[i] = items[index];
+            index = (index + 1) % items.length;
+        }
+
         // update first and last
         items = tmp;
         first = items.length - 1;
