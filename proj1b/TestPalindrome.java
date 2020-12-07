@@ -24,4 +24,13 @@ public class TestPalindrome {
 
         assertFalse(palindrome.isPalindrome("ab"));
     }
+
+    @Test
+    public void testIsPalindromeBycc(){
+        OffByN offBy5 = new OffByN(5);
+        assertTrue(palindrome.isPalindrome("af", offBy5));
+        assertTrue(palindrome.isPalindrome("fa", offBy5));
+
+        assertFalse(palindrome.isPalindrome("ah", offBy5));
+    }
 }
