@@ -83,7 +83,7 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
-        last = backIndex(last);
+        last = forwardIndex(last);
         T ret = (T) items[last];
         items[last] = null;
         size -= 1;
