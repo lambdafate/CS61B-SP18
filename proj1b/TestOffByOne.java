@@ -1,12 +1,32 @@
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class TestOffByOne {
-    /*
+
     // You must use this CharacterComparator and not instantiate
     // new ones, or the autograder might be upset.
     static CharacterComparator offByOne = new OffByOne();
 
     // Your tests go here.
-    Uncomment this class once you've created your CharacterComparator interface and OffByOne class. **/
+    @Test
+    public void testEqualChars() {
+        assertTrue(offByOne.equalChars('a', 'b'));
+        assertTrue(offByOne.equalChars('Z', '['));
+        assertTrue(offByOne.equalChars('&', '%'));
+
+        assertFalse(offByOne.equalChars('a', 'a'));
+        assertFalse(offByOne.equalChars('A', 'a'));
+    }
+
+    @Test
+    public void testIsPalindrome() {
+        OffByOne offByOne = new OffByOne();
+        assertTrue(offByOne.isPalindrome(""));
+        assertTrue(offByOne.isPalindrome("a"));
+        assertTrue(offByOne.isPalindrome("aZ&a%[b"));
+
+        assertFalse(offByOne.isPalindrome("abc"));
+    }
 }
