@@ -38,6 +38,9 @@ public class Palindrome {
     }
 
     private boolean isPalindrome(String word, int i, int j) {
+        if (j < i) {
+            return true;
+        }
         if (word.charAt(i) != word.charAt(j)) {
             return false;
         }
@@ -47,10 +50,10 @@ public class Palindrome {
         return true;
     }
 
-    public boolean isPalindrome(String word, CharacterComparator cc){
+    public boolean isPalindrome(String word, CharacterComparator cc) {
         Deque<Character> deque = wordToDeque(word);
-        while (deque.size() > 1){
-            if(!cc.equalChars(deque.removeFirst(), deque.removeLast())){
+        while (deque.size() > 1) {
+            if (!cc.equalChars(deque.removeFirst(), deque.removeLast())) {
                 return false;
             }
         }
