@@ -1,6 +1,8 @@
 public class ArrayDeque<T> {
     private static final int INIT_SIZE = 8;
     private static final int INCREASE = 2;
+    private static final double RATE = 0.25;
+
 
     private Object[] items;
     private int first;
@@ -28,7 +30,7 @@ public class ArrayDeque<T> {
     public void addFirst(T item) {
         checkWhenAdd();
         items[first] = item;
-        forwardFirst();
+        first = forwardIndex(first);
         size += 1;
     }
 
@@ -36,7 +38,7 @@ public class ArrayDeque<T> {
     public void addLast(T item) {
         checkWhenAdd();
         items[last] = item;
-        backLast();
+        last = backIndex(last);
         size += 1;
     }
 
@@ -67,7 +69,7 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
-        backFirst();
+        first = backIndex(first);
         T ret = (T) items[first];
         items[first] = null;
         size -= 1;
@@ -81,7 +83,7 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
-        forwardLast();
+        last = backIndex(last);
         T ret = (T) items[last];
         items[last] = null;
         size -= 1;
@@ -112,26 +114,17 @@ public class ArrayDeque<T> {
         last = size;
     }
 
-    private void backFirst() {
-        first = (first + 1) % items.length;
-    }
 
-    private void forwardFirst() {
-        first -= 1;
-        if (first < 0) {
-            first = items.length - 1;
+    private int forwardIndex(int index) {
+        index -= 1;
+        if (index < 0) {
+            return items.length - 1;
         }
+        return index;
     }
 
-    private void backLast() {
-        last = (last + 1) % items.length;
-    }
-
-    private void forwardLast() {
-        last -= 1;
-        if (last < 0) {
-            last = items.length - 1;
-        }
+    private int backIndex(int index) {
+        return (index + 1) % items.length;
     }
 
     private double getRate() {
@@ -145,7 +138,7 @@ public class ArrayDeque<T> {
     }
 
     private void checkWhenRemove() {
-        if (items.length > 16 && getRate() < 0.25) {
+        if (items.length > 16 && getRate() < RATE) {
             resize(size * 2);
         }
     }
