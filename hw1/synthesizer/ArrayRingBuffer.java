@@ -24,7 +24,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         //       you'll need to use this.capacity to set the capacity.
         items = (T[]) new Object[Math.max(0, capacity)];
         first = 0;
-        last = 1;
+        last = (first + 1) % items.length;  // note: if use last = 1, it will fail when enqueue and items.length = 1
         this.capacity = items.length;
         this.fillCount = 0;
     }
