@@ -25,7 +25,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         items = (T[]) new Object[Math.max(0, capacity)];
         first = 0;
         last = 1;
-        this.capacity = capacity;
+        this.capacity = items.length;
         this.fillCount = 0;
     }
 
@@ -67,7 +67,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     public T peek() {
         // TODO: Return the first item. None of your instance variables should change.
         if (isEmpty()) {
-            return null;
+            throw new RuntimeException("Ring Buffer Underflow");
         }
         return items[(first + 1) % items.length];
     }
