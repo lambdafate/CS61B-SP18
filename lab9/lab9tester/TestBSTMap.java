@@ -2,8 +2,14 @@ package lab9tester;
 
 import static org.junit.Assert.*;
 
+import edu.princeton.cs.algs4.BST;
+import edu.princeton.cs.algs4.In;
 import org.junit.Test;
 import lab9.BSTMap;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Tests by Brendan Hu, Spring 2015, revised for 2018 by Josh Hug
@@ -86,6 +92,74 @@ public class TestBSTMap {
         assertTrue(b.get("hi") != null);
     }
 
+    // test get/put/size
+    @Test
+    public void testGetPutSize(){
+        BSTMap<String, Integer> b = new BSTMap<>();
+        assertEquals(b.size(), 0);
+        assertEquals(b.get("first"), null);
+        b.put("first", 10);
+        assertEquals(b.get("first"), (Integer) 10);
+        assertEquals(b.size(), 1);
+        b.put("first", 20);
+        b.put("aaa", 10);
+        b.put("zzz", 30);
+        assertEquals(b.size(), 3);
+        assertEquals(b.get("first"), (Integer) 20);
+    }
+
+    // test keySet
+    @Test
+    public void testKeySet(){
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put("f", 10);
+        map.put("a", 1);
+        map.put("b", 20);
+        BSTMap<String, Integer> b = new BSTMap<>();
+        int size = 0;
+        for (String key: map.keySet()) {
+            b.put(key, map.get(key));
+            size += 1;
+            assertEquals(b.size(), size);
+        }
+        assertEquals(b.keySet().size(), map.keySet().size());
+        for (String key: b.keySet()) {
+            assertEquals(map.get(key), b.get(key));
+        }
+    }
+
+
+    // test remove
+    @Test
+    public void testRemove(){
+        BSTMap<String, Integer> map = new BSTMap<>();
+        map.put("f", 10);
+        map.put("a", 1);
+        map.put("b", 20);
+        assertEquals(map.size(), 3);
+        map.remove("f", 100);
+        assertEquals(map.size(), 3);
+        assertEquals(map.get("f"), (Integer)10);
+        map.remove("f");
+        assertEquals(map.size(), 2);
+        assertEquals(null, map.get("f"));
+
+    }
+
+    // test iterator
+    @Test
+    public void testIterator(){
+        BSTMap<String, Integer> map = new BSTMap<>();
+        map.put("b", 10);
+        map.put("a", 1);
+        map.put("c", 20);
+        String[] keys = {"a", "b", "c"};
+        int index = 0;
+        for (String k: map) {
+            // System.out.println(k);
+            assertEquals(keys[index++], k);
+        }
+    }
     public static void main(String[] args) {
         jh61b.junit.TestRunner.runTests(TestBSTMap.class);
     }
